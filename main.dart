@@ -38,7 +38,7 @@ void main() {
         String? depositInput = stdin.readLineSync();
         double? depositAmount = double.tryParse(depositInput ?? '');
 
-        if (depositAmount == null || depositAmount < 0) {
+        if (depositAmount == null) {
           print('Input tidak valid.');
         } else {
           account.deposit(depositAmount);
@@ -50,7 +50,7 @@ void main() {
         String? withdrawInput = stdin.readLineSync();
         double? withdrawAmount = double.tryParse(withdrawInput ?? '');
 
-        if (withdrawAmount == null || withdrawAmount < 0) {
+        if (withdrawAmount == null) {
           print('Input tidak valid.');
         } else {
           account.withdraw(withdrawAmount);
