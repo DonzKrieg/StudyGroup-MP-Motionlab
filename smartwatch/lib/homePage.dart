@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Container(
-                        width: 178,
+                        width: (MediaQuery.of(context).size.width - 82) / 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -309,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Container(
-                        width: 178,
+                        width: (MediaQuery.of(context).size.width - 82) / 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -349,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                                       Icon(
                                         Icons.favorite,
                                         size: 20,
-                                        color: Colors.red,
+                                        color: Colors.grey,
                                       ),
                                     ],
                                   ),
@@ -366,7 +366,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Container(
-                        width: 178,
+                        width: (MediaQuery.of(context).size.width - 82) / 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -406,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                                       Icon(
                                         Icons.favorite,
                                         size: 20,
-                                        color: Colors.red,
+                                        color: Colors.grey,
                                       ),
                                     ],
                                   ),
@@ -423,7 +423,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Container(
-                        width: 178,
+                        width: (MediaQuery.of(context).size.width - 82) / 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -463,7 +463,7 @@ class _HomePageState extends State<HomePage> {
                                       Icon(
                                         Icons.favorite,
                                         size: 20,
-                                        color: Colors.red,
+                                        color: Colors.grey,
                                       ),
                                     ],
                                   ),
