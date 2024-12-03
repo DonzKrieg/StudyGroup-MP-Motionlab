@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,10 +14,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
         child: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Color(0xFF00623B),
           items: [
             BottomNavigationBarItem(
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
                 'assets/images/home.png',
                 width: 23,
               ),
+              backgroundColor: Color(0xFF00623B),
               label: 'home',
             ),
             BottomNavigationBarItem(
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> {
                 'assets/images/pay.png',
                 width: 23,
               ),
+              backgroundColor: Color(0xFF00623B),
               label: 'pay',
             ),
             BottomNavigationBarItem(
@@ -38,6 +41,7 @@ class _HomePageState extends State<HomePage> {
                 'assets/images/fav.png',
                 width: 23,
               ),
+              backgroundColor: Color(0xFF00623B),
               label: 'favorite',
             ),
             BottomNavigationBarItem(
@@ -45,6 +49,7 @@ class _HomePageState extends State<HomePage> {
                 'assets/images/notif.png',
                 width: 23,
               ),
+              backgroundColor: Color(0xFF00623B),
               label: 'notification',
             ),
           ],
@@ -134,22 +139,18 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           width: 92,
                           height: 40,
-                          padding: EdgeInsets.symmetric(vertical: 18),
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
                             color: Color(0xFF3A5A40),
+                            border: Border.all(),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'All',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFFF2F2F2),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            'All',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFFF2F2F2),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -158,22 +159,18 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           width: 122,
                           height: 40,
-                          padding: EdgeInsets.symmetric(vertical: 18),
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
                             color: Color(0xFFF2F2F2),
+                            border: Border.all(),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Watch',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFF4D4D4D),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            'Watch',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF4D4D4D),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -182,22 +179,18 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           width: 100,
                           height: 40,
-                          padding: EdgeInsets.symmetric(vertical: 18),
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
                             color: Color(0xFFF2F2F2),
+                            border: Border.all(),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Shirt',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFF4D4D4D),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            'Shirt',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF4D4D4D),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -206,22 +199,18 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           width: 99,
                           height: 40,
-                          padding: EdgeInsets.symmetric(vertical: 18),
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
                             color: Color(0xFFF2F2F2),
+                            border: Border.all(),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Shoes',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFF4D4D4D),
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            'Shoes',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF4D4D4D),
+                            ),
                           ),
                         ),
                       ],
@@ -246,60 +235,65 @@ class _HomePageState extends State<HomePage> {
                   spacing: 10,
                   runSpacing: 10,
                   children: [
-                    Card(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: (MediaQuery.of(context).size.width - 82) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/smartwatch.png',
-                            ),
-                            SizedBox(
-                              height: 9,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 3),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Mi Band 8 Pro',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        r'$54.00',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color(0xFF00623B),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: Colors.red,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/product');
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Container(
+                          width: (MediaQuery.of(context).size.width - 82) / 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                'assets/images/smartwatch.png',
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 9,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 3),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Mi Band 8 Pro',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          r'$54.00',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Color(0xFF00623B),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.favorite,
+                                          size: 20,
+                                          color: Colors.red,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -475,6 +469,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
