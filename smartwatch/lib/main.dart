@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartwatch/homePage.dart';
+import 'package:smartwatch/pages/login_page.dart';
 import 'package:smartwatch/product.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => LoginPage(),
         '/product': (context) => Product(),
       },
     );
