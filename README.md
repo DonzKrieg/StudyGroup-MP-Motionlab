@@ -1,4 +1,4 @@
-Week - 3 (Slicing UI)
+Week - 2 (Slicing UI)
 
 Widget -> Komponen yang saling terhubung untuk membentuk interfaces
 "Menggunakan konsep widget tree (parent and child)"
