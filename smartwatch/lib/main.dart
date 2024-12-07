@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartwatch/homePage.dart';
+import 'package:smartwatch/pages/homePage.dart';
 import 'package:smartwatch/pages/login_page.dart';
-import 'package:smartwatch/product.dart';
+import 'package:smartwatch/pages/product.dart';
 
 void main() {
   runApp(const MainApp());
