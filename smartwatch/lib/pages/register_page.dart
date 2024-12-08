@@ -2,18 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:smartwatch/widgets/button.dart';
 import 'package:smartwatch/widgets/custom_textfield_button.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,35 +21,38 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
-                    child: Lottie.asset('assets/animation/shopping.json'),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
                   Text(
-                    'Welcome!',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
+                    'Register',
+                    style: GoogleFonts.poppins(
                       textStyle: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    'Happy Shopping All',
-                    textAlign: TextAlign.center,
+                    'Create your account for Happy Shopping',
                     style: GoogleFonts.roboto(
                       textStyle: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         color: Color(0xFF707070),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 18,
+                    height: 54,
+                  ),
+                  CustomTextFormField(
+                    hintText: 'Full Name',
+                    imageURL: 'assets/images/profile.png',
+                    show: false,
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   const CustomTextFormField(
                     hintText: 'Email',
@@ -71,14 +68,22 @@ class _LoginPageState extends State<LoginPage> {
                     show: true,
                   ),
                   SizedBox(
+                    height: 20,
+                  ),
+                  const CustomTextFormField(
+                    hintText: 'Confirm Password',
+                    imageURL: 'assets/images/lock.png',
+                    show: true,
+                  ),
+                  SizedBox(
                     height: 42,
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushNamed(context, '/');
                     },
                     child: Button(
-                      textButton: 'Login',
+                      textButton: 'Register',
                     ),
                   ),
                   SizedBox(
@@ -88,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don’t have an account?',
+                        'Already have an account?',
                         style: GoogleFonts.roboto(
                           textStyle: TextStyle(
                             color: Colors.black,
@@ -102,10 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/register');
+                          Navigator.pushNamed(context, '/');
                         },
                         child: Text(
-                          'Register',
+                          'Login',
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
                               color: Color(0xFF00623B),
