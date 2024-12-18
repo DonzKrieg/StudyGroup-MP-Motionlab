@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smartwatch/controller/cart_controller.dart';
+import 'package:smartwatch/widgets/cart_item.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+  final CartController cartController = Get.put(CartController());
+  CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cartController = Get.put(CartController());
-
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -41,159 +40,21 @@ class CartPage extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Container(
-                margin: EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width * 0.94,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: Colors.white,
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(9),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.28,
-                            maxHeight: MediaQuery.of(context).size.width * 0.28,
-                          ),
-                          child: Image.asset(
-                            'assets/images/miband.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        SizedBox(width: 17),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Mi Band 8 Pro - Brand New',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                r'$54.00',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF00623B),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 40),
-                          child: Card(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  onPressed: cartController.quantityDecrement,
-                                  icon: Icon(Icons.remove),
-                                  color: Color(0xFF00623B),
-                                ),
-                                Text("${cartController.quantity.value}"),
-                                IconButton(
-                                  onPressed: cartController.quantityIncrement,
-                                  icon: Icon(Icons.add),
-                                  color: Color(0xFF00623B),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              CartItem(
+                imageURL: 'assets/images/miband.png',
+                title: 'Mi Band 8 Pro - Brand New',
+                price: r'$54.00',
+                quantity: cartController.quantity.value,
+                onIncrement: cartController.quantityIncrement,
+                onDecrement: cartController.quantityDecrement,
               ),
-              Container(
-                margin: EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width * 0.94,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: Colors.white,
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(9),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.28,
-                            maxHeight: MediaQuery.of(context).size.width * 0.28,
-                          ),
-                          child: Image.asset(
-                            'assets/images/baju.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        SizedBox(width: 17),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Lycra Men’s shirt',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                r'$12.00',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF00623B),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 40),
-                          child: Card(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  onPressed: cartController.quantityDecrement1,
-                                  icon: Icon(Icons.remove),
-                                  color: Color(0xFF00623B),
-                                ),
-                                Text("${cartController.quantity1.value}"),
-                                IconButton(
-                                  onPressed: cartController.quantityIncrement1,
-                                  icon: Icon(Icons.add),
-                                  color: Color(0xFF00623B),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              CartItem(
+                imageURL: 'assets/images/baju.png',
+                title: 'Lycra Men’s shirt',
+                price: r'$12.00',
+                quantity: cartController.quantity1.value,
+                onIncrement: cartController.quantityIncrement1,
+                onDecrement: cartController.quantityDecrement1,
               ),
             ],
           ),
