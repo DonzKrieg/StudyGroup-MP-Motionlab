@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:smartwatch/pages/cart_page.dart';
 import 'package:smartwatch/pages/homePage.dart';
 import 'package:smartwatch/pages/login_page.dart';
 import 'package:smartwatch/pages/product.dart';
 import 'package:smartwatch/pages/register_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:smartwatch/pages/transaction_page.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +28,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   void initialization() async {
-    print('pausing...');
     await Future.delayed(Duration(seconds: 2));
-    print('unpausing...');
     FlutterNativeSplash.remove();
   }
 
@@ -40,6 +40,8 @@ class _MainAppState extends State<MainApp> {
         '/register': (context) => RegisterPage(),
         '/home': (context) => HomePage(),
         '/product': (context) => Product(),
+        '/cart': (context) => CartPage(),
+        '/invoice': (context) => TransactionPage(),
       },
     );
   }

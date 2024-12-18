@@ -78,10 +78,15 @@ class _HomePageState extends State<HomePage> {
                       width: 47,
                       height: 47,
                     ),
-                    Image.asset(
-                      'assets/images/bag.png',
-                      width: 23,
-                      height: 23,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/cart');
+                      },
+                      child: Image.asset(
+                        'assets/images/bag.png',
+                        width: 23,
+                        height: 23,
+                      ),
                     ),
                   ],
                 ),

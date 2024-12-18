@@ -97,21 +97,26 @@ class _ProductState extends State<Product> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(23),
-        child: Container(
-          height: 55,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Color(0xff00623B),
-          ),
-          child: Center(
-            child: Text(
-              'Add To Bag',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/cart');
+        },
+        child: Padding(
+          padding: EdgeInsets.all(23),
+          child: Container(
+            height: 55,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color(0xff00623B),
+            ),
+            child: Center(
+              child: Text(
+                'Add To Bag',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

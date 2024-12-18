@@ -46,7 +46,7 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(
                     height: 54,
                   ),
-                  CustomTextFormField(
+                  const CustomTextFormField(
                     hintText: 'Full Name',
                     imageURL: 'assets/images/profile.png',
                     show: false,
