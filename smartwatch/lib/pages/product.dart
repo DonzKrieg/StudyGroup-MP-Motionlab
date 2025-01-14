@@ -1,117 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:smartwatch/controller/cart_controller.dart';
+import 'package:smartwatch/models/product_model.dart';
 
-class Product extends StatefulWidget {
+class Product extends StatelessWidget {
   const Product({super.key});
 
   @override
-  State<Product> createState() => _ProductState();
-}
-
-class _ProductState extends State<Product> {
-  @override
   Widget build(BuildContext context) {
+    final ProductModel product =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
+
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 23,
-          ),
-          child: ListView(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 31,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        child: Icon(
-                          Icons.chevron_left,
-                          size: 33,
-                        ),
-                      ),
-                      Text(
-                        'Product Detail',
-                        style: TextStyle(
-                          fontSize: 22,
-                        ),
-                      ),
-                      Icon(
-                        Icons.favorite,
-                        size: 33,
-                        color: Colors.red,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Image.asset(
-                    'assets/images/miband.png',
-                    width: double.infinity,
-                    height: 401,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Mi Band 8 Pro',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    r'$54.00',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xff00623B),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Built for life and made to last, this full-zip corduroy jacket is part of our Nike Life collection. The spacious fit gives you plenty of room to layer underneath, while the soft corduroy keeps it casual and timeless.',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xff6D6D6D),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 81,
-                  ),
-                ],
+      appBar: AppBar(
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        ),
+        title: const Text('Product'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.favorite,
+              color: product.isFavorite ? Colors.red : Colors.grey,
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                product.image,
+                fit: BoxFit.fitWidth,
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              product.name,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              '\$${product.price.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    color: const Color.fromARGB(255, 0, 154, 92),
+                  ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              product.description,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
+          final cartController = Get.find<CartController>();
+          cartController.incrementQuantity(product.id);
           Navigator.pushNamed(context, '/cart');
         },
         child: Padding(
-          padding: EdgeInsets.all(23),
+          padding: const EdgeInsets.all(23),
           child: Container(
             height: 55,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Color(0xff00623B),
+              color: const Color(0xff00623B),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
-                'Add To Bag',
+                'Add To Cart',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

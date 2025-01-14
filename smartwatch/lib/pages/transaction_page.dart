@@ -19,10 +19,9 @@ class TransactionPage extends StatelessWidget {
             ),
           ),
         ),
-        title: Center(
-          child: Text(
-            'Invoice',
-          ),
+        centerTitle: true,
+        title: Text(
+          'Invoice',
         ),
       ),
       body: Padding(

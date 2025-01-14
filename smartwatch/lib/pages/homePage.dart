@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:smartwatch/models/product_model.dart';
+import 'package:smartwatch/utils/dummy.dart';
+import 'package:smartwatch/widgets/bottom_navbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,50 +13,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String selectedCategory = 'All';
+  List<ProductModel> filteredProducts = [];
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts = DataDummy.listDummyProducts;
+  }
+
+  void filterProducts(String category) {
+    setState(() {
+      selectedCategory = category;
+      if (category == 'All') {
+        filteredProducts = DataDummy.listDummyProducts;
+      } else {
+        filteredProducts = DataDummy.listDummyProducts
+            .where((product) => product.type == category)
+            .toList();
+      }
+    });
+  }
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+
+    if (index == 1) {
+      Navigator.pushNamed(context, '/favorites');
+    } else if (index == 2) {
+      Navigator.pushNamed(context, '/profile');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: ClipRRect(
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xFF00623B),
-          items: [
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/home.png',
-                width: 23,
-              ),
-              backgroundColor: Color(0xFF00623B),
-              label: 'home',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/pay.png',
-                width: 23,
-              ),
-              backgroundColor: Color(0xFF00623B),
-              label: 'pay',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/fav.png',
-                width: 23,
-              ),
-              backgroundColor: Color(0xFF00623B),
-              label: 'favorite',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/notif.png',
-                width: 23,
-              ),
-              backgroundColor: Color(0xFF00623B),
-              label: 'notification',
-            ),
-          ],
-        ),
+      bottomNavigationBar: bottomNavbar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 23),
@@ -136,90 +136,47 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 37,
                 ),
-                Container(
-                  child: SingleChildScrollView(
+                SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 92,
-                          height: 40,
+                    clipBehavior: Clip.none,
+                    itemCount: DataDummy.listDummyCategories.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final String data = DataDummy.listDummyCategories[index];
+
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(50),
+                        onTap: () => filterProducts(data),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 4,
+                          ),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(23),
-                            color: Color(0xFF3A5A40),
-                            border: Border.all(),
+                            color: selectedCategory == data
+                                ? const Color(0xFF00623B)
+                                : const Color(0xFFF2F2F2),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           child: Text(
-                            'All',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFFF2F2F2),
-                            ),
+                            data,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: selectedCategory == data
+                                      ? Colors.white
+                                      : const Color(0xFF4D4D4D),
+                                ),
                           ),
                         ),
-                        SizedBox(
-                          width: 14,
-                        ),
-                        Container(
-                          width: 122,
-                          height: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(23),
-                            color: Color(0xFFF2F2F2),
-                            border: Border.all(),
-                          ),
-                          child: Text(
-                            'Watch',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF4D4D4D),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 14,
-                        ),
-                        Container(
-                          width: 100,
-                          height: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(23),
-                            color: Color(0xFFF2F2F2),
-                            border: Border.all(),
-                          ),
-                          child: Text(
-                            'Shirt',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF4D4D4D),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 14,
-                        ),
-                        Container(
-                          width: 99,
-                          height: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(23),
-                            color: Color(0xFFF2F2F2),
-                            border: Border.all(),
-                          ),
-                          child: Text(
-                            'Shoes',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF4D4D4D),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
                 SizedBox(
@@ -239,10 +196,11 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
                   runSpacing: 10,
-                  children: [
-                    GestureDetector(
+                  children: filteredProducts.map((product) {
+                    return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/product');
+                        Navigator.pushNamed(context, '/product',
+                            arguments: product);
                       },
                       child: Card(
                         color: Colors.white,
@@ -255,7 +213,8 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                'assets/images/smartwatch.png',
+                                product.image,
+                                fit: BoxFit.cover,
                               ),
                               SizedBox(
                                 height: 9,
@@ -267,11 +226,12 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Mi Band 8 Pro',
+                                      product.name,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     SizedBox(
                                       height: 7,
@@ -281,16 +241,20 @@ class _HomePageState extends State<HomePage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          r'$54.00',
+                                          '\$${product.price.toStringAsFixed(2)}',
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: Color(0xFF00623B),
                                           ),
                                         ),
                                         Icon(
-                                          Icons.favorite,
+                                          product.isFavorite
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
                                           size: 20,
-                                          color: Colors.red,
+                                          color: product.isFavorite
+                                              ? Colors.red
+                                              : Colors.grey,
                                         ),
                                       ],
                                     ),
@@ -301,179 +265,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Card(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: (MediaQuery.of(context).size.width - 82) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/baju.png',
-                            ),
-                            SizedBox(
-                              height: 9,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 3),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Lycra Men’s shirt',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        r'$12.00',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color(0xFF00623B),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: (MediaQuery.of(context).size.width - 82) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/headset.png',
-                            ),
-                            SizedBox(
-                              height: 9,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 3),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Siberia 800',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        r'$45.00',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color(0xFF00623B),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        width: (MediaQuery.of(context).size.width - 82) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/sepatu.png',
-                            ),
-                            SizedBox(
-                              height: 9,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 3),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Strawberry Frappuccino',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        r'$35.00',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color(0xFF00623B),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  }).toList(),
                 ),
                 SizedBox(
                   height: 10,

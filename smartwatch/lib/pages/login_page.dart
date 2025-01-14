@@ -1,19 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smartwatch/widgets/button.dart';
 import 'package:smartwatch/widgets/custom_textfield_button.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 23),
+              padding: const EdgeInsets.symmetric(horizontal: 23),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
                   Center(
                     child: Lottie.asset('assets/animation/shopping.json'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(

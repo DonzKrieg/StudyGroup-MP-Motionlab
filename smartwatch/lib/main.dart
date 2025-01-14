@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:smartwatch/controller/cart_controller.dart';
 import 'package:smartwatch/pages/cart_page.dart';
 import 'package:smartwatch/pages/homePage.dart';
 import 'package:smartwatch/pages/login_page.dart';
@@ -8,6 +11,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:smartwatch/pages/transaction_page.dart';
 
 void main() {
+  Get.put(CartController());
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MainApp());
@@ -28,7 +32,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   void initialization() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     FlutterNativeSplash.remove();
   }
 
