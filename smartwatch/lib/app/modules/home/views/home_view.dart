@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smartwatch/app/routes/app_pages.dart';
-import 'package:smartwatch/app/utils/data_dummy.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -81,53 +80,53 @@ class HomeView extends GetView<HomeController> {
                             ),
                             const SizedBox(height: 30),
                             SizedBox(
-                              height: 40.h,
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                clipBehavior: Clip.none,
-                                itemCount: DataDummy.listDummyCategories.length,
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(width: 12),
-                                itemBuilder: (context, index) {
-                                  final String data =
-                                      DataDummy.listDummyCategories[index];
+                                height: 40.h,
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  clipBehavior: Clip.none,
+                                  itemCount: controller.categories.length,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(width: 12),
+                                  itemBuilder: (context, index) {
+                                    final String data =
+                                        controller.categories[index];
 
-                                  return InkWell(
-                                    borderRadius: BorderRadius.circular(50),
-                                    onTap: () =>
-                                        controller.filterProducts(data),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 4,
+                                    return InkWell(
+                                      borderRadius: BorderRadius.circular(50),
+                                      onTap: () =>
+                                          controller.filterProducts(data),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 4,
+                                        ),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: controller.selectedCategory ==
+                                                  data
+                                              ? const Color(0xFF00623B)
+                                              : const Color(0xFFF2F2F2),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Text(
+                                          data,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(
+                                                color: controller
+                                                            .selectedCategory ==
+                                                        data
+                                                    ? Colors.white
+                                                    : const Color(0xFF4D4D4D),
+                                              ),
+                                        ),
                                       ),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            controller.selectedCategory == data
-                                                ? const Color(0xFF00623B)
-                                                : const Color(0xFFF2F2F2),
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Text(
-                                        data,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .copyWith(
-                                              color:
-                                                  controller.selectedCategory ==
-                                                          data
-                                                      ? Colors.white
-                                                      : const Color(0xFF4D4D4D),
-                                            ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
+                                    );
+                                  },
+                                )),
                             const SizedBox(height: 30),
                             Text(
                               'Our Best Seller',
@@ -140,103 +139,90 @@ class HomeView extends GetView<HomeController> {
                             ),
                             const SizedBox(height: 20),
                             GridView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20,
-                                childAspectRatio: 0.67,
-                              ),
-                              itemCount:
-                                  controller.product.value.products?.length ??
-                                      0,
-                              itemBuilder: (context, index) {
-                                final data =
-                                    controller.product.value.products?[index];
-
-                                return InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: () {
-                                    Get.toNamed(
-                                      Routes.DETAIL_PRODUCT,
-                                      arguments: {"id": data?.id ?? 0},
-                                    );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: const Color(0xFFFCFFFE),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 0),
-                                        ),
-                                      ],
+                                shrinkWrap: true,
+                                primary: false,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
+                                  childAspectRatio: 0.67,
+                                ),
+                                itemCount: controller.filteredProducts.length,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      controller.filteredProducts[index];
+                                  return InkWell(
+                                    borderRadius: BorderRadius.circular(12),
+                                    onTap: () {
+                                      Get.toNamed(
+                                        Routes.DETAIL_PRODUCT,
+                                        arguments: {"id": data.id ?? 0},
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: const Color(0xFFFCFFFE),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            child: Image.network(
+                                              data.thumbnail ?? "",
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 8,
+                                              top: 8,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  data.title ?? "",
+                                                  style: const TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      '\$${data.price}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineLarge!
+                                                          .copyWith(
+                                                            color: const Color(
+                                                                0xFF00623B),
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          child: Image.network(
-                                            data?.thumbnail ?? "",
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 8,
-                                            top: 8,
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                data?.title ?? "",
-                                                style: const TextStyle(
-                                                    color: Colors.black),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    '\$${data?.price}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headlineLarge!
-                                                        .copyWith(
-                                                          color: const Color(
-                                                              0xFF00623B),
-                                                        ),
-                                                  ),
-                                                  // IconButton(
-                                                  //   onPressed: () {},
-                                                  //   icon: Icon(
-                                                  //     Icons.favorite,
-                                                  //     color: data.isFavorite
-                                                  //         ? Colors.red
-                                                  //         : Colors.grey,
-                                                  //   ),
-                                                  // )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                                  );
+                                }),
                             const SizedBox(height: 20),
                           ],
                         ),

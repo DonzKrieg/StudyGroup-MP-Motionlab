@@ -90,9 +90,9 @@ class DetailProductView extends GetView<DetailProductController> {
                   child: CustomButton(
                     text: 'Add to Cart',
                     onTap: () {
-                      final cartController = Get.find<CartController>();
-                      cartController.incrementQuantity(
-                          (controller.detailProduct.value.id ?? 0) as String);
+                      // final cartController = Get.find<CartController>();
+                      // cartController.incrementQuantity(
+                      //     (controller.detailProduct.value.id ?? 0) as String);
                       Get.toNamed(Routes.CART);
                     },
                   ),

@@ -1,20 +1,19 @@
 import 'package:get/get.dart';
-import 'package:smartwatch/app/data/models/product_model.dart';
-import 'package:smartwatch/app/utils/data_dummy.dart';
+import 'package:smartwatch/app/data/models/product_model_api.dart';
 import 'package:smartwatch/services/product_service.dart';
-
-import '../../../data/models/product_model_api.dart';
 
 class HomeController extends GetxController {
   String selectedCategory = 'All';
-  List<ProductModel> filteredProducts = [];
+  List<ProductElement> filteredProducts = [];
   var product = Product().obs;
+  var categories =
+      <String>['All'].obs; // Tambahkan 'All' sebagai kategori default
   var isLoading = true.obs;
+
   @override
   void onInit() {
     super.onInit();
     fetchProduct();
-    filteredProducts = DataDummy.listDummyProducts;
   }
 
   void filterProducts(String category) {
@@ -22,18 +21,39 @@ class HomeController extends GetxController {
     update();
 
     if (category == 'All') {
-      filteredProducts = DataDummy.listDummyProducts;
-      update();
+      filteredProducts = product.value.products ?? [];
     } else {
-      filteredProducts = DataDummy.listDummyProducts
-          .where((product) => product.type == category)
-          .toList();
-      update();
+      filteredProducts = product.value.products
+              ?.where((prod) =>
+                  prod.category?.toString().toLowerCase() ==
+                  category.toLowerCase())
+              .toList() ??
+          [];
     }
+
+    // Debugging log
+    print("Filtered Products: $filteredProducts");
+
+    update();
   }
 
   void fetchProduct() async {
-    product.value = await ProductService().getProducts() ?? Product();
-    isLoading.value = false;
+    try {
+      isLoading.value = true;
+      product.value = await ProductService().getProducts() ?? Product();
+
+      final uniqueCategories = product.value.products
+              ?.map((prod) => prod.category?.toString().trim().toLowerCase())
+              .whereType<String>()
+              .toSet()
+              .toList() ??
+          [];
+      categories.value = ['All', ...uniqueCategories];
+      filteredProducts = product.value.products ?? [];
+    } catch (e) {
+      print("Error fetching products: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 }
