@@ -6,8 +6,8 @@ class HomeController extends GetxController {
   String selectedCategory = 'All';
   List<ProductElement> filteredProducts = [];
   var product = Product().obs;
-  var categories =
-      <String>['All'].obs; // Tambahkan 'All' sebagai kategori default
+
+  var categoriesMap = <String, String>{'All': 'All'}.obs;
   var isLoading = true.obs;
 
   @override
@@ -16,22 +16,21 @@ class HomeController extends GetxController {
     fetchProduct();
   }
 
-  void filterProducts(String category) {
-    selectedCategory = category;
+  void filterProducts(String displayCategory) {
+    selectedCategory = displayCategory;
     update();
 
-    if (category == 'All') {
+    final rawCategory = categoriesMap[displayCategory];
+    if (rawCategory == 'All') {
       filteredProducts = product.value.products ?? [];
     } else {
       filteredProducts = product.value.products
               ?.where((prod) =>
-                  prod.category?.toString().toLowerCase() ==
-                  category.toLowerCase())
+                  prod.category?.toString().toLowerCase() == rawCategory)
               .toList() ??
           [];
     }
 
-    // Debugging log
     print("Filtered Products: $filteredProducts");
 
     update();
@@ -48,7 +47,13 @@ class HomeController extends GetxController {
               .toSet()
               .toList() ??
           [];
-      categories.value = ['All', ...uniqueCategories];
+
+      final cleanCategories = {
+        for (var category in uniqueCategories)
+          category.split('.').last.capitalizeFirst!: category
+      };
+
+      categoriesMap.value = {'All': 'All', ...cleanCategories};
       filteredProducts = product.value.products ?? [];
     } catch (e) {
       print("Error fetching products: $e");

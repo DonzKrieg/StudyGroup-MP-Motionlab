@@ -85,17 +85,20 @@ class HomeView extends GetView<HomeController> {
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   clipBehavior: Clip.none,
-                                  itemCount: controller.categories.length,
+                                  itemCount:
+                                      controller.categoriesMap.keys.length,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(width: 12),
                                   itemBuilder: (context, index) {
-                                    final String data =
-                                        controller.categories[index];
+                                    // Mendapatkan kategori bersih untuk ditampilkan
+                                    final String displayCategory = controller
+                                        .categoriesMap.keys
+                                        .elementAt(index);
 
                                     return InkWell(
                                       borderRadius: BorderRadius.circular(50),
-                                      onTap: () =>
-                                          controller.filterProducts(data),
+                                      onTap: () => controller
+                                          .filterProducts(displayCategory),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 24,
@@ -104,21 +107,21 @@ class HomeView extends GetView<HomeController> {
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: controller.selectedCategory ==
-                                                  data
+                                                  displayCategory
                                               ? const Color(0xFF00623B)
                                               : const Color(0xFFF2F2F2),
                                           borderRadius:
                                               BorderRadius.circular(50),
                                         ),
                                         child: Text(
-                                          data,
+                                          displayCategory, // Menampilkan kategori bersih
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleLarge!
                                               .copyWith(
                                                 color: controller
                                                             .selectedCategory ==
-                                                        data
+                                                        displayCategory
                                                     ? Colors.white
                                                     : const Color(0xFF4D4D4D),
                                               ),
